@@ -18,14 +18,7 @@ namespace CommunityLibraryApp_n11521147.Services
 
         public void AddNewMovie(string title, string genre, string classification, int duration, int copies)
         {
-            var movie = new Movie
-            {
-                Title = title,
-                Genre = genre,
-                Classification = classification,
-                Duration = duration,
-                NumberOfCopies = copies
-            };
+            var movie = new Movie(title, genre, classification, duration, copies);
             _movieCollection.AddMovie(movie);
             Console.WriteLine("Movie added successfully.");
         }
@@ -33,14 +26,7 @@ namespace CommunityLibraryApp_n11521147.Services
         public void RemoveMovie(string title)
         {
             bool result = _movieCollection.RemoveMovie(title);
-            if (result)
-            {
-                Console.WriteLine("Movie removed successfully.");
-            }
-            else
-            {
-                Console.WriteLine("Movie not found.");
-            }
+            Console.WriteLine(result ? "Movie removed successfully." : "Movie not found.");
         }
 
         public Movie? GetMovieDetails(string title)
@@ -62,6 +48,11 @@ namespace CommunityLibraryApp_n11521147.Services
             {
                 Console.WriteLine($"- {movie.Title} ({movie.NumberOfCopies} copies available)");
             }
+        }
+
+        internal object GetAllMovies()
+        {
+            throw new NotImplementedException();
         }
     }
 }

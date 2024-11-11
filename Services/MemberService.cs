@@ -18,14 +18,7 @@ namespace CommunityLibraryApp_n11521147.Services
 
         public void RegisterMember(string firstName, string lastName, string phoneNumber, string password)
         {
-            var member = new Member
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                PhoneNumber = phoneNumber,
-                Password = password,
-                BorrowedMovies = new List<string>()
-            };
+            var member = new Member(firstName, lastName, phoneNumber, password);
             _memberCollection.AddMember(member);
             Console.WriteLine("Member registered successfully.");
         }
@@ -33,14 +26,7 @@ namespace CommunityLibraryApp_n11521147.Services
         public void RemoveMember(string firstName, string lastName)
         {
             bool result = _memberCollection.RemoveMember(firstName, lastName);
-            if (result)
-            {
-                Console.WriteLine("Member removed successfully.");
-            }
-            else
-            {
-                Console.WriteLine("Member not found.");
-            }
+            Console.WriteLine(result ? "Member removed successfully." : "Member not found.");
         }
 
         public Member? FindMemberByName(string firstName, string lastName)

@@ -1,10 +1,5 @@
 ﻿using CommunityLibraryApp_n11521147.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommunityLibraryApp_n11521147.Services
 {
@@ -22,7 +17,7 @@ namespace CommunityLibraryApp_n11521147.Services
                 return false;
             }
         }
-        
+
         public bool AuthenticateMember(MemberCollection memberCollection, string firstName, string lastName, string password)
         {
             var member = memberCollection.FindMember(firstName, lastName);

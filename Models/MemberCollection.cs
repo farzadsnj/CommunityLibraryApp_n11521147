@@ -4,56 +4,72 @@ using System.Linq;
 
 namespace CommunityLibraryApp_n11521147.Models
 {
-    public class MovieCollection
+    public class MemberCollection
     {
-        private Dictionary<string, Movie> movieDictionary;
+        private Member?[] members; // Change to nullable Member array.
+        private int count;
 
         // Constructor
-        public MovieCollection()
+        public MemberCollection(int size)
         {
-            movieDictionary = new Dictionary<string, Movie>();
+            members = new Member?[size]; // Initialize with nullable type.
+            count = 0;
         }
 
-        // Add a movie to the collection
-        public void AddMovie(Movie movie)
+        // Add a new member
+        public void AddMember(Member member)
         {
-            if (!movieDictionary.ContainsKey(movie.Title))
+            if (count < members.Length)
             {
-                movieDictionary[movie.Title] = movie;
-                Console.WriteLine("Movie added successfully.");
+                members[count] = member;
+                count++;
             }
             else
             {
-                Console.WriteLine("Movie already exists in the collection.");
+                Console.WriteLine("Member collection is full.");
             }
         }
 
-        // Remove a movie from the collection
-        public bool RemoveMovie(string title)
+        // Remove a member by name
+        public bool RemoveMember(string firstName, string lastName)
         {
-            if (movieDictionary.Remove(title))
+            for (int i = 0; i < count; i++)
             {
-                Console.WriteLine("Movie removed successfully.");
-                return true;
+                if (members[i] != null && members[i]!.FirstName == firstName && members[i]!.LastName == lastName)
+                {
+                    members[i] = members[count - 1];
+                    members[count - 1] = null; // Safe assignment with nullable type.
+                    count--;
+                    return true;
+                }
             }
-            else
+            return false;
+        }
+
+        // Search for a member by name
+        public Member? FindMember(string firstName, string lastName)
+        {
+            foreach (var member in members)
             {
-                Console.WriteLine("Movie not found.");
-                return false;
+                if (member != null && member.FirstName == firstName && member.LastName == lastName)
+                {
+                    return member;
+                }
             }
+            return null;
         }
 
-        // Find a movie in the collection
-        public Movie? FindMovie(string title)
+        // List all members
+        public void ListAllMembers()
         {
-            movieDictionary.TryGetValue(title, out Movie? movie);
-            return movie;
-        }
-
-        // Get all movies as a list
-        public List<Movie> GetAllMovies()
-        {
-            return movieDictionary.Values.ToList();
+            Console.WriteLine("Registered Members:");
+            for (int i = 0; i < count; i++)
+            {
+                if (members[i] != null)
+                {
+                    Console.WriteLine($"{members[i]!.FirstName} {members[i]!.LastName}");
+                }
+            }
         }
     }
 }
