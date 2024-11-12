@@ -1,19 +1,16 @@
 ﻿using CommunityLibraryApp_n11521147.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommunityLibraryApp_n11521147.Services
 {
     public class MemberService
     {
-        private MemberCollection _memberCollection;
+        private readonly MemberCollection _memberCollection; // Ensure the naming is consistent
 
         public MemberService(MemberCollection memberCollection)
         {
-            _memberCollection = memberCollection;
+            _memberCollection = memberCollection ?? throw new ArgumentNullException(nameof(memberCollection));
         }
 
         public void RegisterMember(string firstName, string lastName, string phoneNumber, string password)
@@ -23,10 +20,11 @@ namespace CommunityLibraryApp_n11521147.Services
             Console.WriteLine("Member registered successfully.");
         }
 
-        public void RemoveMember(string firstName, string lastName)
+        public bool RemoveMember(string firstName, string lastName)
         {
             bool result = _memberCollection.RemoveMember(firstName, lastName);
             Console.WriteLine(result ? "Member removed successfully." : "Member not found.");
+            return result;
         }
 
         public Member? FindMemberByName(string firstName, string lastName)
@@ -47,6 +45,26 @@ namespace CommunityLibraryApp_n11521147.Services
             {
                 Console.WriteLine($"- {movie}");
             }
+        }
+
+        public List<Member> FindMembersRentingMovie(string movieTitle)
+        {
+            var rentingMembers = new List<Member>();
+
+            foreach (var member in _memberCollection.GetAllMembers())
+            {
+                if (member != null && member.BorrowedMovies.Contains(movieTitle))
+                {
+                    rentingMembers.Add(member);
+                }
+            }
+
+            return rentingMembers;
+        }
+
+        public List<Member> GetAllMembers()
+        {
+            return _memberCollection.GetAllMembers();
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CommunityLibraryApp_n11521147.Models
 {
@@ -57,6 +56,20 @@ namespace CommunityLibraryApp_n11521147.Models
                 }
             }
             return null;
+        }
+
+        // Get all members
+        public List<Member> GetAllMembers()
+        {
+            var allMembers = new List<Member>();
+            for (int i = 0; i < count; i++)
+            {
+                if (members[i] != null)
+                {
+                    allMembers.Add(members[i]!); // Use null-forgiving operator
+                }
+            }
+            return allMembers;
         }
 
         // List all members

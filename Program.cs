@@ -30,7 +30,7 @@ namespace CommunityLibraryApp_n11521147
 
             // Initialize menus
             var staffMenu = new StaffMenu(movieService, memberService);
-            var memberMenu = new MemberMenu(memberCollection, movieService);
+            var memberMenu = new MemberMenu(memberCollection, movieService, memberService); // Pass memberService here
             var mainMenu = new MainMenu(authenticationService, staffMenu, memberMenu);
 
             // Run the main menu

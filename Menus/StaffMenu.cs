@@ -138,8 +138,17 @@ namespace CommunityLibraryApp_n11521147.Menus
                 return;
             }
 
-            // Implement logic to add copies to the existing movie
-            Console.WriteLine("Feature under development. Press any key to continue.");
+            var movie = _movieService.GetMovieDetails(title!);
+            if (movie != null)
+            {
+                movie.NumberOfCopies += copies;
+                Console.WriteLine($"Added {copies} copies to the movie \"{title}\". Total copies now: {movie.NumberOfCopies}.");
+            }
+            else
+            {
+                Console.WriteLine("Movie not found.");
+            }
+            Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
         }
 
@@ -261,8 +270,20 @@ namespace CommunityLibraryApp_n11521147.Menus
                 return;
             }
 
-            // Implement logic to find members renting the movie
-            Console.WriteLine("Feature under development. Press any key to continue.");
+            var rentingMembers = _memberService.FindMembersRentingMovie(title!);
+            if (rentingMembers.Count > 0)
+            {
+                Console.WriteLine("Members currently renting the movie:");
+                foreach (var member in rentingMembers)
+                {
+                    Console.WriteLine($"{member.FirstName} {member.LastName}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No members are currently renting this movie or the movie does not exist.");
+            }
+            Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
         }
     }
