@@ -13,7 +13,12 @@ namespace CommunityLibraryApp_n11521147.Services
 
         public MovieServices(MovieCollection movieCollection)
         {
-            _movieCollection = movieCollection;
+            _movieCollection = movieCollection ?? throw new ArgumentNullException(nameof(movieCollection));
+        }
+
+        public List<Movie> GetAllMovies()
+        {
+            return _movieCollection.GetAllMovies();
         }
 
         public void AddNewMovie(string title, string genre, string classification, int duration, int copies)
@@ -36,7 +41,7 @@ namespace CommunityLibraryApp_n11521147.Services
 
         public void DisplayAllMovies()
         {
-            var movies = _movieCollection.GetAllMovies();
+            var movies = GetAllMovies();
             if (movies.Count == 0)
             {
                 Console.WriteLine("No movies available.");
@@ -48,11 +53,6 @@ namespace CommunityLibraryApp_n11521147.Services
             {
                 Console.WriteLine($"- {movie.Title} ({movie.NumberOfCopies} copies available)");
             }
-        }
-
-        internal object GetAllMovies()
-        {
-            throw new NotImplementedException();
         }
     }
 }

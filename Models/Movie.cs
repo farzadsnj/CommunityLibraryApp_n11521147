@@ -14,6 +14,7 @@ namespace CommunityLibraryApp_n11521147.Models
         public string Classification { get; set; }
         public int Duration { get; set; }
         public int NumberOfCopies { get; set; }
+        public int TimesRented { get; set; } // Property to track the number of times the movie is rented
 
         // Constructor
         public Movie(string title, string genre, string classification, int duration, int numberOfCopies)
@@ -23,6 +24,7 @@ namespace CommunityLibraryApp_n11521147.Models
             Classification = classification;
             Duration = duration;
             NumberOfCopies = numberOfCopies;
+            TimesRented = 0; // Initialize TimesRented to 0
         }
 
         // Method to display movie information
@@ -33,6 +35,7 @@ namespace CommunityLibraryApp_n11521147.Models
             Console.WriteLine($"Classification: {Classification}");
             Console.WriteLine($"Duration: {Duration} minutes");
             Console.WriteLine($"Copies Available: {NumberOfCopies}");
+            Console.WriteLine($"Times Rented: {TimesRented}");
         }
     }
 }
